@@ -3,28 +3,27 @@
 
 {% block content %}
 
-{% if user.is_authenticated%}
-
-<h1>Register</h1>
-
-{% else %}
 
 <div class="col-md-6 offset-md-3">
-    <h1>Login!</h1><br>
-    <form method="POST" action="{% url 'home' %}">
+    <h1>Register</h1><br>
+    <form method="POST" action="">
         {% csrf_token %}
-        <div class="mb-3">
-            <input type="text" class="form-control" name="username" placeholder="Username">
+        {% if form.errors %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            Your Form Has Errors
+            {% for field in form %}
+            {% if field.errors %}
+            {{ field.errors }}
+            {% endif %}
+            {% endfor %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <br>
-        <div class="mb-3">
-            <input type="password" class="form-control" name="password" placeholder="Password">
-        </div>
-        <br>
-        <button type="submit" class="btn btn-secondary">Login</button>
+        {% endif %}
+        {{form.as_p}}
+        <br/>
+        <button type="submit" class="btn btn-secondary">Register</button>
     </form>
 </div>
 
-{% endif %}
 
 {% endblock %}
